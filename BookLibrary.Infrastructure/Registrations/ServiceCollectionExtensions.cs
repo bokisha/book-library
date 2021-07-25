@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace BookLibrary.Infrastructure.Registrations
 {
@@ -7,8 +9,8 @@ namespace BookLibrary.Infrastructure.Registrations
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
-            services.AddDbContext<BookLibraryDbContext>(opts => opts.UseInMemoryDatabase(databaseName: "BookLibrary"));
-
+            services.AddDbContext<IBookLibraryDbContext, BookLibraryDbContext>(opts => opts.UseInMemoryDatabase(databaseName: "BookLibrary"));
+            services.AddMediatR(Assembly.GetExecutingAssembly());
             return services;
         }
     }

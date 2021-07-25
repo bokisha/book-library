@@ -1,0 +1,33 @@
+<h1 id="tableLabel">myLibrary</h1>
+
+<p *ngIf="!books"><em>Loading...</em></p>
+<div>
+  <button mat-raised-button color="primary">Add</button>
+</div>
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="books">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Genre</th>
+      <th>Author</th>
+      <th>Modified</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let book of books; trackBy: trackByFn">
+      <td>{{ book.id }}</td>
+      <td>{{ book.title }}</td>
+      <td>{{ book.description }}</td>
+      <td>{{ book.genre }}</td>
+      <td>{{ book.authorId }}</td>
+      <td>{{ book.modifiedUtc | date:'short' }}</td>
+      <td>
+        <a class="navbar-brand" [routerLink]="['/']">edit</a>
+        <a class="navbar-brand" href="javascript:void(0)" (click)="delete(book)">delete</a>
+      </td>
+    </tr>
+  </tbody>
+</table>

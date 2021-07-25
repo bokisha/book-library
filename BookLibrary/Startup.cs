@@ -1,3 +1,4 @@
+using BookLibrary.Infrastructure;
 using BookLibrary.Infrastructure.Registrations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -5,6 +6,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace BookLibrary
 {
@@ -26,8 +28,21 @@ namespace BookLibrary
             {
                 configuration.RootPath = "ClientApp/dist";
             });
-            //ServiceCollectionExtensions.AddInfrastructure(services);
+            ServiceCollectionExtensions.AddInfrastructure(services);
+
             services.AddControllers();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "BookLibrary API",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Bojan Nestorovic"
+                    }
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +57,18 @@ namespace BookLibrary
                 app.UseExceptionHandler("/Error");
             }
 
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<IBookLibraryDbContext>();
+                (context as BookLibraryDbContext).Database.EnsureCreated();
+            }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "BookLibrary API V1");
+            });
+            
             app.UseStaticFiles();
             if (!env.IsDevelopment())
             {
