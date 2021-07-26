@@ -1,33 +1,36 @@
 <h1 id="tableLabel">myLibrary</h1>
 
-<p *ngIf="!books"><em>Loading...</em></p>
-<div>
-  <button mat-raised-button color="primary">Add</button>
+<div *ngIf="(books$ | async) as books; else loading">
+  <div>
+    <button class="btn btn-sm btn-success mb-2" routerLink="add">Add Book</button>
+  </div>
+  <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="books">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Genre</th>
+        <th>Author</th>
+        <th>Modified</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let book of books; trackBy: trackByFn">
+        <td>{{ book.id }}</td>
+        <td>{{ book.title }}</td>
+        <td>{{ book.description }}</td>
+        <td>{{ book.genreString }}</td>
+        <td>{{ book.authorString }}</td>
+        <td>{{ book.modifiedUtc | date:'short' }}</td>
+        <td>
+          <a  class="btn btn-sm btn-primary mr-1" [routerLink]="['edit', book.id]">Edit</a>
+          <a  class="btn btn-sm btn-danger btn-delete-user" href="javascript:void(0)" (click)="delete(book)">Delete</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
-<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="books">
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>Title</th>
-      <th>Description</th>
-      <th>Genre</th>
-      <th>Author</th>
-      <th>Modified</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let book of books; trackBy: trackByFn">
-      <td>{{ book.id }}</td>
-      <td>{{ book.title }}</td>
-      <td>{{ book.description }}</td>
-      <td>{{ book.genreString }}</td>
-      <td>{{ book.authorString }}</td>
-      <td>{{ book.modifiedUtc | date:'short' }}</td>
-      <td>
-        <a class="navbar-brand" [routerLink]="['/']">edit</a>
-        <a class="navbar-brand" href="javascript:void(0)" (click)="delete(book)">delete</a>
-      </td>
-    </tr>
-  </tbody>
-</table>
+
+<ng-template #loading><p><em>Loading...</em></p></ng-template>

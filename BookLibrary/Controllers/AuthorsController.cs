@@ -2,6 +2,7 @@
 using BookLibrary.Core.Models;
 using BookLibrary.Infrastructure.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace BookLibrary.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Get()
         {
             IEnumerable<Author> authors = await _mediator.Send(new GetAllAuthorsQuery());

@@ -17,7 +17,18 @@ export class BooksService {
     return this.http.get<Book[]>(this.bookApiUrl);
   }
 
+  public getById(bookId: number): Observable<Book> {
+    return this.http.get<Book>(this.bookApiUrl + "/" + bookId);
+  }
+
   public delete(bookId: number): Observable<number> {
     return this.http.delete<number>(this.bookApiUrl + "/" + bookId);
+  }
+
+  public create(book: Book) {
+    return this.http.post(this.bookApiUrl, book);
+  }
+  public update(book: Book) {
+    return this.http.put(this.bookApiUrl + "/" + book.id, book);
   }
 }

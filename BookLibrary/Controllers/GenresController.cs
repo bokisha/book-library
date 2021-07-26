@@ -1,5 +1,6 @@
 ﻿using BookLibrary.Core;
 using BookLibrary.Core.Enums;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookLibrary.Controllers
@@ -9,6 +10,7 @@ namespace BookLibrary.Controllers
     public class GenresController : ControllerBase
     {
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult Get()
         {  
             return Ok(EnumHelper.GetSelectItems(typeof(Genre)));
