@@ -26,8 +26,8 @@ namespace BookLibrary.Infrastructure.CommandRequests
             {
                 book.Title = command.Title;
                 book.Description = command.Description;
-                book.Genre = command.Genre;
-                book.AuthorId = command.AuthorId;
+                book.Genre = command.Genre.Value;
+                book.AuthorId = command.AuthorId.Value;
                 book.Description = command.Description;
                 book.ModifiedUtc = DateTime.UtcNow;
                 await _context.SaveChanges();

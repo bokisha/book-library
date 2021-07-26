@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace BookLibrary.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class AuthorsController : ControllerBase
@@ -24,7 +25,7 @@ namespace BookLibrary.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<SelectItemByIdModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> Get()
         {
             IEnumerable<Author> authors = await _mediator.Send(new GetAllAuthorsQuery());

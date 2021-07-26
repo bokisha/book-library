@@ -8,11 +8,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using System.Threading.Tasks;
 
 namespace BookLibrary.Controllers
 
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class BooksController : ControllerBase
@@ -27,14 +29,19 @@ namespace BookLibrary.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+        [Consumes(MediaTypeNames.Application.Json)]
         public async Task<IActionResult> Create(CreateBookCommand command)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             return Ok(await _mediator.Send(command));
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<Book>),StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
         {
             IEnumerable<Book> books = await _mediator.Send(new GetAllBooksQuery());
@@ -42,7 +49,7 @@ namespace BookLibrary.Controllers
         }
 
         [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Book), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById(int id)
         {
@@ -55,7 +62,7 @@ namespace BookLibrary.Controllers
         }
 
         [HttpDelete("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(int id)
         {
@@ -68,15 +75,17 @@ namespace BookLibrary.Controllers
         }
 
         [HttpPut("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Consumes(MediaTypeNames.Application.Json)]
         public async Task<IActionResult> Update(int id, UpdateBookCommand command)
         {
-            if (id != command.Id)
+            if (!ModelState.IsValid || id != command.Id)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
+            
             Book book = await _mediator.Send(new GetBookByIdQuery { Id = id });
             if (book == null)
             {
