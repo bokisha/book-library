@@ -21,8 +21,8 @@
       <td>{{ book.id }}</td>
       <td>{{ book.title }}</td>
       <td>{{ book.description }}</td>
-      <td>{{ book.genre }}</td>
-      <td>{{ book.authorId }}</td>
+      <td>{{ book.genreString }}</td>
+      <td>{{ book.authorString }}</td>
       <td>{{ book.modifiedUtc | date:'short' }}</td>
       <td>
         <a class="navbar-brand" [routerLink]="['/']">edit</a>

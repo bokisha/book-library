@@ -19,17 +19,19 @@ namespace BookLibrary
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
             });
 
             ServiceCollectionExtensions.AddInfrastructure(services);
+
+            // I could've return directly from Infrastructure view model that is needed, but with that i am tightly coupling infrastructure with one specific API. If more server apis are added that need same entity but will serve
+            // different view model, i couldn't do that with view models inside infrastructure. That's why i delegated view model conversion to API
+            Registrations.ServiceCollectionExtensions.RegisterModelConverters(services);
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -46,7 +48,6 @@ namespace BookLibrary
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -58,6 +59,7 @@ namespace BookLibrary
                 app.UseExceptionHandler("/Error");
             }
 
+            // Hacky way to ensure InMemory database has been populated. Should be moved to DAL.InMemory assembly
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<IBookLibraryDbContext>();
@@ -87,9 +89,6 @@ namespace BookLibrary
 
             app.UseSpa(spa =>
             {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
-
                 spa.Options.SourcePath = "ClientApp";
 
                 if (env.IsDevelopment())

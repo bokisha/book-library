@@ -10,5 +10,10 @@ namespace BookLibrary.Core.Entities
         public DateTime CreatedUtc{ get; set; }
         public DateTime ModifiedUtc { get; set; }
 
+
+        public string GetFullName()
+        {
+            return $"{FirstName} {LastName}";
+        }
     }
 }

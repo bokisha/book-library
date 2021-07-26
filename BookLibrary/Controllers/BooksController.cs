@@ -1,8 +1,12 @@
-﻿using BookLibrary.Infrastructure.CommandRequests;
+﻿using BookLibrary.Core;
+using BookLibrary.Core.Entities;
+using BookLibrary.Infrastructure.CommandRequests;
 using BookLibrary.Infrastructure.Queries;
+using BookLibrary.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BookLibrary.Controllers
@@ -12,32 +16,38 @@ namespace BookLibrary.Controllers
     [ApiController]
     public class BooksController : ControllerBase
     {
-        private IMediator _mediator;
+        private readonly IMediator _mediator;
+        private readonly IEntityModelConverter<Book, BookModel> _bookModelConverter;
 
-        protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
+        public BooksController(IMediator mediator, IEntityModelConverter<Book, BookModel> bookModelConverter)
+        {
+            _mediator = mediator;
+            _bookModelConverter = bookModelConverter;
+        }
 
         [HttpPost]
         public async Task<IActionResult> Create(CreateBookCommand command)
         {
-            return Ok(await Mediator.Send(command));
+            return Ok(await _mediator.Send(command));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await Mediator.Send(new GetAllBooksQuery()));
+            IEnumerable<Book> books = await _mediator.Send(new GetAllBooksQuery());
+            return Ok(books.Select(book => _bookModelConverter.ConvertToModel(book)));
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            return Ok(await Mediator.Send(new GetBookByIdQuery { Id = id }));
+            return Ok(await _mediator.Send(new GetBookByIdQuery { Id = id }));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            return Ok(await Mediator.Send(new DeleteBookByIdCommand { Id = id }));
+            return Ok(await _mediator.Send(new DeleteBookByIdCommand { Id = id }));
         }
 
         [HttpPut("{id}")]
@@ -47,7 +57,7 @@ namespace BookLibrary.Controllers
             {
                 return BadRequest();
             }
-            return Ok(await Mediator.Send(command));
+            return Ok(await _mediator.Send(command));
         }
     }
 }
