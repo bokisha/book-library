@@ -1,12 +1,8 @@
+import { AlertService } from "./../../services/alert.service";
 import { BooksService } from "./../../services/books.service";
 import { GenreService } from "./../../services/genre.service";
 import { Component, OnInit } from "@angular/core";
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { finalize, take } from "rxjs/operators";
 import { AuthorsService } from "src/app/services/authors.service";
@@ -33,7 +29,8 @@ export class BookDetailsComponent implements OnInit {
     private readonly formBuilder: FormBuilder,
     public readonly genreService: GenreService,
     public readonly authorsService: AuthorsService,
-    private readonly bookService: BooksService
+    private readonly bookService: BooksService,
+    private readonly alertService: AlertService
   ) {}
 
   ngOnInit() {
@@ -54,17 +51,22 @@ export class BookDetailsComponent implements OnInit {
         take(1),
         finalize(() => (this.loading = false))
       )
-      .subscribe((values) => {
-        this.form = this.formBuilder.group({
-          title: [""],
-          description: [""],
-          genre: [values[0][0].value, Validators.required],
-          authorId: [values[1][0].value, Validators.required],
-        });
+      .subscribe({
+        next: (values) => {
+          this.form = this.formBuilder.group({
+            title: [""],
+            description: [""],
+            genre: [values[0][0].value, Validators.required],
+            authorId: [values[1][0].value, Validators.required],
+          });
 
-        if (!this.isAddMode) {
-          this.form.patchValue(values[2]);
-        }
+          if (!this.isAddMode) {
+            this.form.patchValue(values[2]);
+          }
+        },
+        error: (error) => {
+          this.alertService.error(error);
+        },
       });
   }
 
@@ -85,13 +87,13 @@ export class BookDetailsComponent implements OnInit {
         .pipe(take(1))
         .subscribe({
           next: () => {
-            // this.alertService.success("Book added", {
-            //   keepAfterRouteChange: true,
-            // });
+            this.alertService.success("Book added", {
+              keepAfterRouteChange: true,
+            });
             this.router.navigate(["../"], { relativeTo: this.route });
           },
           error: (error) => {
-            //this.alertService.error(error);
+            this.alertService.error(error);
             this.saving = false;
           },
         });
@@ -101,13 +103,13 @@ export class BookDetailsComponent implements OnInit {
         .pipe(take(1))
         .subscribe({
           next: () => {
-            // this.alertService.success("User updated", {
-            //   keepAfterRouteChange: true,
-            // });
+            this.alertService.success("Book updated", {
+              keepAfterRouteChange: true,
+            });
             this.router.navigate(["../"], { relativeTo: this.route });
           },
           error: (error) => {
-            //this.alertService.error(error);
+            this.alertService.error(error);
             this.saving = false;
           },
         });

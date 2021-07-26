@@ -1,4 +1,4 @@
-import { BookDetailsComponent } from "./components/book-edit/book-details.component";
+import { BookDetailsComponent } from "./components/book-details/book-details.component";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -10,12 +10,14 @@ import { NavMenuComponent } from "./components/nav-menu/nav-menu.component";
 import { BooksComponent } from "./components/books/books.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatButtonModule } from "@angular/material";
+import { AlertComponent } from "./components/alert/alert.component";
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     BooksComponent,
     BookDetailsComponent,
+    AlertComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),

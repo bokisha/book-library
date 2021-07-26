@@ -1,3 +1,4 @@
+import { AlertService } from "./../../services/alert.service";
 import { BooksService } from "./../../services/books.service";
 import {
   ChangeDetectionStrategy,
@@ -5,7 +6,7 @@ import {
   OnDestroy,
   OnInit,
 } from "@angular/core";
-import { switchMap, take, takeUntil, tap } from "rxjs/operators";
+import { switchMap, take, takeUntil } from "rxjs/operators";
 import { Book } from "src/app/models/book.model";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 
@@ -18,7 +19,10 @@ export class BooksComponent implements OnInit, OnDestroy {
   public books$: Observable<Array<Book>>;
   private refreshToken$ = new BehaviorSubject<boolean>(undefined);
   private destroySubject$ = new Subject();
-  constructor(private readonly booksService: BooksService) {}
+  constructor(
+    private readonly booksService: BooksService,
+    private readonly alertService: AlertService
+  ) {}
 
   ngOnDestroy(): void {
     this.destroySubject$.unsubscribe();
@@ -36,7 +40,15 @@ export class BooksComponent implements OnInit, OnDestroy {
       this.booksService
         .delete(book.id)
         .pipe(take(1))
-        .subscribe(() => this.refreshToken$.next(undefined));
+        .subscribe({
+          next: () => {
+            this.alertService.success("Book deleted");
+            this.refreshToken$.next(undefined);
+          },
+          error: (error) => {
+            this.alertService.error(error);
+          },
+        });
     }
   }
 
