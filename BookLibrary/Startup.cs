@@ -1,4 +1,4 @@
-using BookLibrary.Infrastructure;
+using BookLibrary.DAL.InMemory;
 using BookLibrary.Infrastructure.Registrations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,6 +28,7 @@ namespace BookLibrary
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
             ServiceCollectionExtensions.AddInfrastructure(services);
 
             services.AddControllers();

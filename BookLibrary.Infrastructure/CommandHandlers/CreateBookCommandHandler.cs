@@ -1,4 +1,5 @@
 ﻿using BookLibrary.Core.Entities;
+using BookLibrary.DAL.InMemory;
 using BookLibrary.Infrastructure.CommandRequests;
 using MediatR;
 using System;

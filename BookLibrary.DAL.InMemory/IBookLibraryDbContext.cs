@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
-namespace BookLibrary.Infrastructure
+namespace BookLibrary.DAL.InMemory
 {
     public interface IBookLibraryDbContext
     {

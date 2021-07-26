@@ -3,7 +3,7 @@ using BookLibrary.Core.Enums;
 using Microsoft.EntityFrameworkCore;
 using System;
 
-namespace BookLibrary.Infrastructure
+namespace BookLibrary.DAL.InMemory
 {
     public static class DbSeeder
     {
