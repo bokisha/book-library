@@ -1,4 +1,4 @@
-﻿namespace BookLibrary.Core
+﻿namespace BookLibrary.Core.Models
 {
     public interface IViewModel
     {

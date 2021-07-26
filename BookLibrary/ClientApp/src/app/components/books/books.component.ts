@@ -1,6 +1,8 @@
+import { BooksService } from "./../../services/books.service";
 import { Component, Inject, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { take } from "rxjs/operators";
+import { Book } from "src/app/models/book.model";
 
 @Component({
   selector: "app-fetch-data",
@@ -8,24 +10,21 @@ import { take } from "rxjs/operators";
 })
 export class BooksComponent implements OnInit {
   public books: Book[];
-  constructor(
-    private readonly http: HttpClient,
-    @Inject("BASE_URL") private readonly baseUrl: string
-  ) {}
+  constructor(private readonly booksService: BooksService) {}
   public ngOnInit(): void {
     this.fetchData();
   }
 
   private fetchData(): void {
-    this.http
-      .get<Book[]>(this.baseUrl + "api/" + "books")
+    this.booksService
+      .getAll()
+      .pipe(take(1))
       .subscribe((books) => (this.books = books));
   }
 
   public delete(book: Book): void {
     if (confirm(`Are you sure you want to delete '${book.title}'?`)) {
-      this.http
-        .delete(this.baseUrl + "api/books" + "/" + book.id)
+     this.booksService.delete(book.id)
         .pipe(take(1))
         .subscribe(() => this.fetchData());
     }
@@ -34,15 +33,4 @@ export class BooksComponent implements OnInit {
   public trackByFn(index: number, item: Book) {
     return item.id;
   }
-}
-
-interface Book {
-  id: number;
-  modifiedUtc: Date;
-  title: string;
-  description: string;
-  genre: number;
-  genreString: string;
-  authorId: number;
-  authorString: string;
 }

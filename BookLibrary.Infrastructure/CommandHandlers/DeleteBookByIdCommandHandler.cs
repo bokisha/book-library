@@ -1,5 +1,4 @@
-﻿
-using BookLibrary.DAL.InMemory;
+﻿using BookLibrary.DAL.InMemory;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;

@@ -5,8 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { BooksComponent } from './books/books.component';
+import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
+import { BooksComponent } from './components/books/books.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatDialogModule } from '@angular/material';
 @NgModule({

@@ -1,6 +1,5 @@
-﻿using BookLibrary.Core;
-using BookLibrary.Core.Entities;
-using BookLibrary.Core.Enums;
+﻿using BookLibrary.Core.Enums;
+using BookLibrary.Core.Models;
 using System;
 
 namespace BookLibrary.Models
@@ -17,22 +16,5 @@ namespace BookLibrary.Models
         public string GenreString { get; set; }
         public int AuthorId { get; set; }
         public string AuthorString { get; set; }
-    }
-
-    public class BookModelConverter : IEntityModelConverter<Book, BookModel>
-    {
-        public BookModel ConvertToModel(Book entity)
-        {
-            return new BookModel
-            {
-                Id = entity.Id,
-                Title = entity.Title,
-                Description = entity.Description,
-                Genre = entity.Genre,
-                GenreString = "TODO",
-                AuthorId = entity.AuthorId,
-                AuthorString = entity.Author.GetFullName()
-            };
-        }
     }
 }
