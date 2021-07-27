@@ -62,7 +62,7 @@ namespace BookLibrary
             // Hacky way to ensure InMemory database has been populated. Should be moved to DAL.InMemory assembly
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
-                var context = serviceScope.ServiceProvider.GetRequiredService<IBookLibraryDbContext>();
+                var context = serviceScope.ServiceProvider.GetRequiredService<BookLibraryDbContext>();
                 (context as BookLibraryDbContext).Database.EnsureCreated();
             }
 

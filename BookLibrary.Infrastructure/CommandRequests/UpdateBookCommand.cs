@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BookLibrary.Infrastructure.CommandRequests
 {
-    public partial class UpdateBookCommand : IRequest<int>
+    public class UpdateBookCommand : IRequest<int>
     {
         [Required]
         public int? Id { get; set; }

@@ -1,10 +1,9 @@
 ﻿using BookLibrary.Core.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace BookLibrary.DAL.InMemory
 {
-    public class BookLibraryDbContext : DbContext, IBookLibraryDbContext
+    public class BookLibraryDbContext : DbContext
     {
         public DbSet<Author> Authors { get; set; }
         public DbSet<Book> Books { get; set; }
@@ -17,11 +16,6 @@ namespace BookLibrary.DAL.InMemory
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             DbSeeder.SeedDatabase(modelBuilder);
-        }
-
-        public new async Task<int> SaveChanges()
-        {
-            return await base.SaveChangesAsync();
         }
     }
 }

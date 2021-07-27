@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using BookLibrary.DAL.InMemory;
+using BookLibrary.Core.Entities;
+using BookLibrary.Core.UnitOfWork;
 using BookLibrary.Infrastructure.CommandRequests;
 using MediatR;
 
@@ -10,15 +10,16 @@ namespace BookLibrary.Infrastructure.CommandHandlers
 {
     public class UpdateBookCommandHandler : IRequestHandler<UpdateBookCommand, int>
     {
-        private readonly IBookLibraryDbContext _context;
-        public UpdateBookCommandHandler(IBookLibraryDbContext context)
+        private readonly IUnitOfWork _unitOfWork;
+
+        public UpdateBookCommandHandler(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<int> Handle(UpdateBookCommand command, CancellationToken cancellationToken)
         {
-            var book = _context.Books.Where(a => a.Id == command.Id).FirstOrDefault();
+            Book book = await _unitOfWork.Books.GetById(command.Id.Value);
             if (book == null)
             {
                 return default;
@@ -31,7 +32,8 @@ namespace BookLibrary.Infrastructure.CommandHandlers
                 book.AuthorId = command.AuthorId.Value;
                 book.Description = command.Description;
                 book.ModifiedUtc = DateTime.UtcNow;
-                await _context.SaveChanges();
+                await _unitOfWork.Books.Update(book);
+                await _unitOfWork.CompleteAsync();
                 return book.Id;
             }
         }

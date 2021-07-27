@@ -1,30 +1,28 @@
 ﻿using BookLibrary.Core.Entities;
-using BookLibrary.DAL.InMemory;
 using BookLibrary.Infrastructure.Queries;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using BookLibrary.Core.UnitOfWork;
 
 namespace BookLibrary.Infrastructure.QueryHandlers
 {
     public class GetAllAuthorsQueryQueryHandler : IRequestHandler<GetAllAuthorsQuery, IEnumerable<Author>>
     {
-        private readonly IBookLibraryDbContext _context;
-        public GetAllAuthorsQueryQueryHandler(IBookLibraryDbContext context)
+        private readonly IUnitOfWork _unitOfWork;
+        public GetAllAuthorsQueryQueryHandler(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
         public async Task<IEnumerable<Author>> Handle(GetAllAuthorsQuery request, CancellationToken cancellationToken)
         {
-            var authorsList = await _context.Authors
-                .ToListAsync();
+            var authorsList = await _unitOfWork.Authors.GetAll();
             if (authorsList == null)
             {
-                return null;
+                return new List<Author>();
             }
-            return authorsList.AsReadOnly();
+            return authorsList;
         }
     }
 }

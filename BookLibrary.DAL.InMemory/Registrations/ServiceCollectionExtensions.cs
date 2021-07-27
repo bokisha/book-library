@@ -1,15 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BookLibrary.Core.UnitOfWork;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BookLibrary.DAL.InMemory.Registrations
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddInMemoryDataAccessLayer(this IServiceCollection services)
+        public static void AddInMemoryDataAccessLayer(this IServiceCollection services)
         {
-            services.AddDbContext<IBookLibraryDbContext, BookLibraryDbContext>(opts => opts.UseInMemoryDatabase(databaseName: "BookLibrary"));
-
-            return services;
+            services.AddDbContext<BookLibraryDbContext>(opts => opts.UseInMemoryDatabase(databaseName: "BookLibrary"));
+            services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
         }
     }
 }

@@ -1,27 +1,26 @@
-﻿using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
-using BookLibrary.DAL.InMemory;
+using BookLibrary.Core.UnitOfWork;
 using BookLibrary.Infrastructure.CommandRequests;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace BookLibrary.Infrastructure.CommandHandlers
 {
     public class DeleteBookByIdCommandHandler : IRequestHandler<DeleteBookByIdCommand, int>
     {
-        private readonly IBookLibraryDbContext _context;
-        public DeleteBookByIdCommandHandler(IBookLibraryDbContext context)
+        private readonly IUnitOfWork _unitOfWork;
+
+        public DeleteBookByIdCommandHandler(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<int> Handle(DeleteBookByIdCommand command, CancellationToken cancellationToken)
         {
-            var product = await _context.Books.Where(a => a.Id == command.Id).FirstOrDefaultAsync();
+            var product = await _unitOfWork.Books.GetById(command.Id);
             if (product == null) return default;
-            _context.Books.Remove(product);
-            await _context.SaveChanges();
+            await _unitOfWork.Books.Delete(command.Id);
+            await _unitOfWork.CompleteAsync();
             return product.Id;
         }
     }

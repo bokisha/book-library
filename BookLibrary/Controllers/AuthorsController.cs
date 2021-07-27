@@ -16,7 +16,7 @@ namespace BookLibrary.Controllers
     public class AuthorsController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IEntityModelConverter<Author, SelectItemByIdModel> _authorModelConverter;
+        private readonly IEntityModelConverter<Author, SelectItemByIdModel> _authorModelConverter; 
 
         public AuthorsController(IMediator mediator, IEntityModelConverter<Author, SelectItemByIdModel> authorModelConverter)
         {
