@@ -16,7 +16,7 @@ namespace BookLibrary.Infrastructure.Registrations
 
             // I've used mediatr library for Mediator pattern to simplify solution since MediatR library is fairly easy to understand(as well Mediator pattern :)).
             // By using Mediator pattern i have decoupled Controllers from Infrastructure and also 
-            // by using Mediator and CQRS patterns, app can be easily expanded to support microservices and event driven methodology
+            // by using Mediator app can be easily expanded to support microservices and event driven methodology
             services.AddMediatR(Assembly.GetExecutingAssembly());
         }
     }
