@@ -32,6 +32,8 @@ namespace BookLibrary.Api.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         public async Task<IActionResult> Create(CreateBookCommandModel commandModel)
         {
+            // Further improvement with using CQRS with Mediator pattern could be that this model is not used directly with mediator, but to have proper ViewModel
+            // and convert it to command model
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

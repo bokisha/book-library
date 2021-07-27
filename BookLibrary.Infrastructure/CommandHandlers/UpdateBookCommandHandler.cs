@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using BookLibrary.Core.Entities;
 using BookLibrary.Core.UnitOfWork;
@@ -31,7 +30,6 @@ namespace BookLibrary.Infrastructure.CommandHandlers
                 book.Genre = command.Genre.Value;
                 book.AuthorId = command.AuthorId.Value;
                 book.Description = command.Description;
-                book.ModifiedUtc = DateTime.UtcNow;
                 await _unitOfWork.Books.Update(book);
                 await _unitOfWork.CompleteAsync();
                 return book.Id;

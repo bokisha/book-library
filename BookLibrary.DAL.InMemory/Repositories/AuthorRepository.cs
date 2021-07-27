@@ -1,5 +1,6 @@
 ﻿using BookLibrary.Core.Entities;
 using BookLibrary.Core.Repositories;
+using BookLibrary.DAL.InMemory.Database;
 
 namespace BookLibrary.DAL.InMemory.Repositories
 {

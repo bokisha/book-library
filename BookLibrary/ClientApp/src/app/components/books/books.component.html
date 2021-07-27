@@ -23,7 +23,7 @@
         <td  [title]="book.description">{{ book.description | truncate:[20]}}</td>
         <td>{{ book.genreString }}</td>
         <td>{{ book.authorString }}</td>
-        <td>{{ book.modifiedUtc | date:'short' }}</td>
+        <td [title]="book.modifiedUtc | date:'full'">{{ book.modifiedUtc | date:'short' }}</td>
         <td>
           <a  class="btn btn-sm btn-primary mr-1" [routerLink]="['edit', book.id]">Edit</a>
           <a  class="btn btn-sm btn-danger btn-delete-user" href="javascript:void(0)" (click)="delete(book)">Delete</a>

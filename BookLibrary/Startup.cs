@@ -1,4 +1,4 @@
-using BookLibrary.DAL.InMemory;
+using BookLibrary.Core.Database;
 using BookLibrary.Infrastructure.Registrations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,8 +29,9 @@ namespace BookLibrary
 
             ServiceCollectionExtensions.AddInfrastructure(services);
 
-            // I could've return directly from Infrastructure view model that is needed, but with that i am tightly coupling infrastructure with one specific API. If more server apis are added that need same entity but will serve
-            // different view model, i couldn't do that with view models inside infrastructure. That's why i delegated view model conversion to API
+            // I could've return directly from Infrastructure view model that is needed, but with that i am tightly coupling infrastructure with one specific API.
+            // If more server apis are added that need same entity but will serve different view model, i couldn't do that with view models inside infrastructure.
+            // That's why i delegated view model conversion to API
             Api.Registrations.ServiceCollectionExtensions.RegisterModelConverters(services);
 
             services.AddControllers();
@@ -59,11 +60,11 @@ namespace BookLibrary
                 app.UseExceptionHandler("/Error");
             }
 
-            // Hacky way to ensure InMemory database has been populated. Should be moved to DAL.InMemory assembly
+            // Initialize the Database
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
-                var context = serviceScope.ServiceProvider.GetRequiredService<BookLibraryDbContext>();
-                context.Database.EnsureCreated();
+                var context = serviceScope.ServiceProvider.GetRequiredService<IDbInitializer>();
+                context.Initialize();
             }
 
             app.UseSwagger();

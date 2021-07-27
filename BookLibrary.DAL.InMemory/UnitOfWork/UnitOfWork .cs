@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using BookLibrary.Core.Repositories;
 using BookLibrary.Core.UnitOfWork;
+using BookLibrary.DAL.InMemory.Database;
 using BookLibrary.DAL.InMemory.Repositories;
 
 namespace BookLibrary.DAL.InMemory.UnitOfWork
@@ -17,6 +18,8 @@ namespace BookLibrary.DAL.InMemory.UnitOfWork
         {
             _context = context;
 
+            // I could also instantiate this with built-in IoC, but since Repositories directly uses context(on destroy context is disposed),
+            // i've decided to instantiate it manually (UoW is instantiated per request)
             Books = new BookRepository(context);
             Authors = new AuthorRepository(context);
         }

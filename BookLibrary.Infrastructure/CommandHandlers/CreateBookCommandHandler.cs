@@ -1,7 +1,6 @@
 ﻿using BookLibrary.Core.Entities;
 using BookLibrary.Infrastructure.CommandRequests;
 using MediatR;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using BookLibrary.Core.UnitOfWork;
@@ -19,11 +18,8 @@ namespace BookLibrary.Infrastructure.CommandHandlers
 
         public async Task<int> Handle(CreateBookCommandModel commandModel, CancellationToken cancellationToken)
         {
-            var createdDateTime = DateTime.UtcNow;
             var book = new Book
             {
-                CreatedUtc = createdDateTime,
-                ModifiedUtc = createdDateTime,
                 Title = commandModel.Title,
                 Description = commandModel.Description,
                 Genre = commandModel.Genre.Value,
