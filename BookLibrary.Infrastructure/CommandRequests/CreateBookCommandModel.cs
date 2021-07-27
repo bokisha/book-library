@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BookLibrary.Infrastructure.CommandRequests
 {
-    public class CreateBookCommand : IRequest<int>
+    public class CreateBookCommandModel : IRequest<int>
     {
         public string Title { get; set; }
         public string Description { get; set; }

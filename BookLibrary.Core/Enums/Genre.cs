@@ -6,6 +6,6 @@
         Fantasy,
         Autobiographical,
         Mystery,
-        Fiction
+        Fable
     }
 }

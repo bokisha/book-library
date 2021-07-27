@@ -30,13 +30,13 @@ namespace BookLibrary.Api.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
         [Consumes(MediaTypeNames.Application.Json)]
-        public async Task<IActionResult> Create(CreateBookCommand command)
+        public async Task<IActionResult> Create(CreateBookCommandModel commandModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            return Ok(await _mediator.Send(command));
+            return Ok(await _mediator.Send(commandModel));
         }
 
         [HttpGet]

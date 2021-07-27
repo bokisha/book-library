@@ -8,7 +8,7 @@ using BookLibrary.Core.UnitOfWork;
 
 namespace BookLibrary.Infrastructure.CommandHandlers
 {
-    public class CreateBookCommandHandler : IRequestHandler<CreateBookCommand, int>
+    public class CreateBookCommandHandler : IRequestHandler<CreateBookCommandModel, int>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -17,17 +17,17 @@ namespace BookLibrary.Infrastructure.CommandHandlers
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<int> Handle(CreateBookCommand command, CancellationToken cancellationToken)
+        public async Task<int> Handle(CreateBookCommandModel commandModel, CancellationToken cancellationToken)
         {
             var createdDateTime = DateTime.UtcNow;
             var book = new Book
             {
                 CreatedUtc = createdDateTime,
                 ModifiedUtc = createdDateTime,
-                Title = command.Title,
-                Description = command.Description,
-                Genre = command.Genre.Value,
-                AuthorId = command.AuthorId.Value
+                Title = commandModel.Title,
+                Description = commandModel.Description,
+                Genre = commandModel.Genre.Value,
+                AuthorId = commandModel.AuthorId.Value
             };
             await _unitOfWork.Books.Add(book);
             await _unitOfWork.CompleteAsync();

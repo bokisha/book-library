@@ -92,7 +92,7 @@ namespace BookLibrary.DAL.InMemory
                     Description = "The Monk Who Sold His Ferrari is a self-help book by Robin Sharma, a writer and motivational speaker. " +
                                   "The book is a business fable derived from Sharma's personal experiences after leaving his " +
                                   "career as a litigation lawyer at the age of 25.",
-                    Genre = Genre.Autobiographical,
+                    Genre = Genre.Fable,
                     CreatedUtc = seedingDateTime,
                     ModifiedUtc = seedingDateTime,
                     AuthorId = author6.Id
