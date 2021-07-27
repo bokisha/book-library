@@ -1,5 +1,4 @@
 ﻿using BookLibrary.Core.Entities;
-using BookLibrary.Core.Models;
 
 namespace BookLibrary.Models.Converters
 {

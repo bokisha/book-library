@@ -1,9 +1,9 @@
-﻿using BookLibrary.Core;
-using BookLibrary.Core.Enums;
-using BookLibrary.Core.Models;
+﻿using BookLibrary.Core.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using BookLibrary.Enums;
+using BookLibrary.Models;
 
 namespace BookLibrary.Controllers
 {

@@ -1,12 +1,13 @@
-﻿using BookLibrary.Core.Entities;
-using BookLibrary.DAL.InMemory;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using BookLibrary.Core.Entities;
+using BookLibrary.DAL.InMemory;
+using BookLibrary.Infrastructure.Queries;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 
-namespace BookLibrary.Infrastructure.Queries
+namespace BookLibrary.Infrastructure.QueryHandlers
 {
     public class GetBookByIdQueryHandler : IRequestHandler<GetBookByIdQuery, Book>
     {

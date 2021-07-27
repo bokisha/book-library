@@ -1,5 +1,4 @@
 ﻿using BookLibrary.Core.Entities;
-using BookLibrary.Core.Models;
 using BookLibrary.Infrastructure.CommandRequests;
 using BookLibrary.Infrastructure.Queries;
 using BookLibrary.Models;

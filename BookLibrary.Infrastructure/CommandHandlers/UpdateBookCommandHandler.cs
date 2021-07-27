@@ -1,11 +1,12 @@
-﻿using BookLibrary.DAL.InMemory;
-using MediatR;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using BookLibrary.DAL.InMemory;
+using BookLibrary.Infrastructure.CommandRequests;
+using MediatR;
 
-namespace BookLibrary.Infrastructure.CommandRequests
+namespace BookLibrary.Infrastructure.CommandHandlers
 {
     public class UpdateBookCommandHandler : IRequestHandler<UpdateBookCommand, int>
     {

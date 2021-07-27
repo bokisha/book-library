@@ -1,5 +1,4 @@
 ﻿using BookLibrary.Core.Entities;
-using BookLibrary.Core.Models;
 using BookLibrary.Models;
 using BookLibrary.Models.Converters;
 using Microsoft.Extensions.DependencyInjection;

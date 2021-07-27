@@ -1,5 +1,4 @@
-﻿
-namespace BookLibrary.Core.Models
+﻿namespace BookLibrary.Models
 {
     public class SelectItemByIdModel : ISelectItem<int>, IViewModel
     {

@@ -1,11 +1,12 @@
-﻿using BookLibrary.DAL.InMemory;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using BookLibrary.DAL.InMemory;
+using BookLibrary.Infrastructure.CommandRequests;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 
-namespace BookLibrary.Infrastructure.CommandRequests
+namespace BookLibrary.Infrastructure.CommandHandlers
 {
     public class DeleteBookByIdCommandHandler : IRequestHandler<DeleteBookByIdCommand, int>
     {

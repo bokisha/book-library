@@ -1,5 +1,4 @@
 ﻿using BookLibrary.Core.Entities;
-using BookLibrary.Core.Models;
 using BookLibrary.Infrastructure.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -7,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BookLibrary.Models;
 
 namespace BookLibrary.Controllers
 {
