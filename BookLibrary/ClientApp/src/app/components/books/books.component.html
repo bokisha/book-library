@@ -20,7 +20,7 @@
       <tr *ngFor="let book of books; trackBy: trackByFn">
         <td>{{ book.id }}</td>
         <td>{{ book.title }}</td>
-        <td>{{ book.description }}</td>
+        <td>{{ book.description | truncate:[20]}}</td>
         <td>{{ book.genreString }}</td>
         <td>{{ book.authorString }}</td>
         <td>{{ book.modifiedUtc | date:'short' }}</td>

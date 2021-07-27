@@ -1,7 +1,7 @@
-﻿using BookLibrary.Core.Enums;
-using System;
+﻿using System;
+using BookLibrary.Core.Enums;
 
-namespace BookLibrary.Models
+namespace BookLibrary.Api.Models
 {
     public class BookModel : IViewModel
     {

@@ -1,4 +1,4 @@
-﻿namespace BookLibrary.Models
+﻿namespace BookLibrary.Api.Models
 {
     public class SelectItemByIdModel : ISelectItem<int>, IViewModel
     {

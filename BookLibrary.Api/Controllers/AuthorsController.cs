@@ -1,14 +1,14 @@
-﻿using BookLibrary.Core.Entities;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using BookLibrary.Api.Models;
+using BookLibrary.Core.Entities;
 using BookLibrary.Infrastructure.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BookLibrary.Models;
 
-namespace BookLibrary.Controllers
+namespace BookLibrary.Api.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]

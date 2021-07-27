@@ -31,7 +31,7 @@ namespace BookLibrary
 
             // I could've return directly from Infrastructure view model that is needed, but with that i am tightly coupling infrastructure with one specific API. If more server apis are added that need same entity but will serve
             // different view model, i couldn't do that with view models inside infrastructure. That's why i delegated view model conversion to API
-            Registrations.ServiceCollectionExtensions.RegisterModelConverters(services);
+            Api.Registrations.ServiceCollectionExtensions.RegisterModelConverters(services);
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -63,7 +63,7 @@ namespace BookLibrary
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<BookLibraryDbContext>();
-                (context as BookLibraryDbContext).Database.EnsureCreated();
+                context.Database.EnsureCreated();
             }
 
             app.UseSwagger();

@@ -1,6 +1,6 @@
 ﻿using BookLibrary.Core.Entities;
 
-namespace BookLibrary.Models.Converters
+namespace BookLibrary.Api.Models.Converters
 {
     public class BookModelConverter : IEntityModelConverter<Book, BookModel>
     {

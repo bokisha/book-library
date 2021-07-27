@@ -2,10 +2,10 @@
 {
     public enum Genre
     {
-        Action,
+        Novel,
         Fantasy,
-        Biography,
+        Autobiographical,
         Mystery,
-        Comic
+        Fiction
     }
 }

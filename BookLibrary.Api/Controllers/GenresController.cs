@@ -1,11 +1,11 @@
-﻿using BookLibrary.Core.Enums;
+﻿using System.Collections.Generic;
+using BookLibrary.Api.Enums;
+using BookLibrary.Api.Models;
+using BookLibrary.Core.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using BookLibrary.Enums;
-using BookLibrary.Models;
 
-namespace BookLibrary.Controllers
+namespace BookLibrary.Api.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]

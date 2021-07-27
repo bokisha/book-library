@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using BookLibrary.Models;
+using BookLibrary.Api.Models;
 
-namespace BookLibrary.Enums
+namespace BookLibrary.Api.Enums
 {
     public static class EnumHelper
     {

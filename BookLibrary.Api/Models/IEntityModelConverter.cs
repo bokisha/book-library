@@ -1,6 +1,6 @@
 ﻿using BookLibrary.Core.Entities;
 
-namespace BookLibrary.Models
+namespace BookLibrary.Api.Models
 {
     public interface IEntityModelConverter<TEntity, TModel>
         where TEntity: IEntity

@@ -11,6 +11,7 @@ import { BooksComponent } from "./components/books/books.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatButtonModule } from "@angular/material";
 import { AlertComponent } from "./components/alert/alert.component";
+import { TruncatePipe } from './pipes/truncate.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,6 +19,7 @@ import { AlertComponent } from "./components/alert/alert.component";
     BooksComponent,
     BookDetailsComponent,
     AlertComponent,
+    TruncatePipe,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
